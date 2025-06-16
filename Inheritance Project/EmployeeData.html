@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Records - CrewCore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
+  <style>
+    body {
+      background-color: #0d1117;
+      font-family: 'Segoe UI', sans-serif;
+      color: #e5e7eb;
+    }
+
+    .topbar {
+      background-color: #161b22;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      margin-left: 30px;
+    }
+
+    .nav-links a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .circle {
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle, limegreen, green);
+      border-radius: 50%;
+    }
+
+    .card {
+      background-color: #161b22;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.03);
+    }
+
+    .fs-4 {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    thead th:first-child,
+    tbody td:first-child {
+      width: 60px;
+      font-weight: 600;
+
+    }
+
+    table {
+      background-color: #161b22;
+    }
+
+    th,
+    td {
+      color: #e5e7eb;
+      vertical-align: middle;
+    }
+
+
+    .btn {
+      border-radius: 6px !important;
+      min-width: 70px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <!-- Top Navigation -->
+  <div class="topbar p-3">
+    <div class="d-flex align-items-center">
+      <div class="circle"></div>
+      <span class="ms-2 fw-bold">CrewCore</span>
+      <div class="nav-links ms-5">
+        <a href="index.html">Dashboard</a>
+        <a href="EmployeeData.html" class="active">EmployeesData</a>
+        <a href="CompanyData.html">CompanyData</a>
+      </div>
+    </div>
+    <div class="profile-section">
+      <span class="text-muted">Welcome, Admin</span>
+      <i class="bi bi-bell-fill text-light"></i>
+    </div>
+  </div>
+  <!-- Below your Topbar -->
+  <div class="container mt-4">
+    <div class="card p-4 shadow">
+      <h4 class="mb-3 text-white">👥 Employee Records</h4>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover table-borderless align-middle text-center rounded-4 overflow-hidden">
+          <thead class="table-dark">
+            <tr class="text-uppercase text-secondary small">
+              <th>S.No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Designation</th>
+              <th>Department</th>
+              <th>Joining Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTableBody">
+            <!-- Data will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function renderTable() {
+      const employees = JSON.parse(localStorage.getItem("employees")) || [];
+      const tbody = document.getElementById("employeeTableBody");
+      tbody.innerHTML = "";
+
+      employees.forEach((emp, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+  <td>${index + 1}</td>
+  <td>${emp.name}</td>
+  <td>${emp.email}</td>
+  <td>${emp.designation}</td>
+  <td>${emp.department}</td>
+  <td>${emp.joiningDate}</td>
+  <td>
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <button class="btn btn-sm btn-primary px-3" onclick="enableEdit(this)">Edit</button>
+      <button class="btn btn-sm btn-success d-none px-3" onclick="saveEdit(this)">Save</button>
+      <button class="btn btn-sm btn-danger px-3" onclick="deleteEmployee(${index})">Delete</button>
+    </div>
+  </td>
+`;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function enableEdit(button) {
+      const row = button.closest("tr");
+      const cells = row.querySelectorAll("td");
+      for (let i = 1; i <= 5; i++) {
+        const currentValue = cells[i].innerText;
+        cells[i].innerHTML = `<input type="text" class="form-control form-control-sm text-center" value="${currentValue}" />`;
+      }
+      row.querySelector(".btn-primary").classList.add("d-none");
+      row.querySelector(".btn-success").classList.remove("d-none");
+    }
+
+    function saveEdit(button) {
+      const row = button.closest("tr");
+      const index = row.getAttribute("data-index");
+      const inputs = row.querySelectorAll("input");
+      const updatedEmp = {
+        name: inputs[0].value,
+        email: inputs[1].value,
+        designation: inputs[2].value,
+        department: inputs[3].value,
+        joiningDate: inputs[4].value
+      };
+
+      let employees = JSON.parse(localStorage.getItem("employees")) || [];
+      employees[index] = updatedEmp;
+      localStorage.setItem("employees", JSON.stringify(employees));
+      renderTable();
+    }
+
+    function deleteEmployee(index) {
+      let employees = JSON.parse(localStorage.getItem("employees")) || [];
+      employees.splice(index, 1);
+      localStorage.setItem("employees", JSON.stringify(employees));
+      renderTable();
+    }
+
+    renderTable();
+  </script>
+
+</body>
+
+</html>
