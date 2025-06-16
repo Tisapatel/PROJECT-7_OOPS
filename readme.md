@@ -79,5 +79,5 @@ This project helps understand:
 Perfect for students and developers practicing OOPS in JavaScript!
 
 ---
-**🔗 Live Preview:** [pr-oops-js.vercel.app](https://pr-oops-js.vercel.app)
+**🔗 Live Preview:** :- https://inheritance-project-five.vercel.app/
 **👩‍💻 Author:** Tisa Patel
