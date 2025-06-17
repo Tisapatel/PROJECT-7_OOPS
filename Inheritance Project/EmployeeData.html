@@ -69,7 +69,6 @@
     tbody td:first-child {
       width: 60px;
       font-weight: 600;
-
     }
 
     table {
@@ -82,14 +81,12 @@
       vertical-align: middle;
     }
 
-
     .btn {
       border-radius: 6px !important;
       min-width: 70px;
     }
   </style>
 </head>
-
 
 <body>
   <!-- Top Navigation -->
@@ -105,10 +102,10 @@
     </div>
     <div class="profile-section">
       <span class="text-muted">Welcome, Admin</span>
-      <i class="bi bi-bell-fill text-light"></i>
     </div>
   </div>
-  <!-- Below your Topbar -->
+
+  <!-- Main Content -->
   <div class="container mt-4">
     <div class="card p-4 shadow">
       <h4 class="mb-3 text-white">👥 Employee Records</h4>
@@ -133,7 +130,6 @@
     </div>
   </div>
 
-
   <script>
     function renderTable() {
       const employees = JSON.parse(localStorage.getItem("employees")) || [];
@@ -142,21 +138,23 @@
 
       employees.forEach((emp, index) => {
         const tr = document.createElement("tr");
+        tr.setAttribute("data-index", index); // Important for edit-save
+
         tr.innerHTML = `
-  <td>${index + 1}</td>
-  <td>${emp.name}</td>
-  <td>${emp.email}</td>
-  <td>${emp.designation}</td>
-  <td>${emp.department}</td>
-  <td>${emp.joiningDate}</td>
-  <td>
-    <div class="d-flex justify-content-center gap-2 flex-wrap">
-      <button class="btn btn-sm btn-primary px-3" onclick="enableEdit(this)">Edit</button>
-      <button class="btn btn-sm btn-success d-none px-3" onclick="saveEdit(this)">Save</button>
-      <button class="btn btn-sm btn-danger px-3" onclick="deleteEmployee(${index})">Delete</button>
-    </div>
-  </td>
-`;
+          <td>${index + 1}</td>
+          <td>${emp.name}</td>
+          <td>${emp.email}</td>
+          <td>${emp.designation}</td>
+          <td>${emp.department}</td>
+          <td>${emp.joiningDate}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+              <button class="btn btn-sm btn-primary px-3" onclick="enableEdit(this)">Edit</button>
+              <button class="btn btn-sm btn-success d-none px-3" onclick="saveEdit(this)">Save</button>
+              <button class="btn btn-sm btn-danger px-3" onclick="deleteEmployee(${index})">Delete</button>
+            </div>
+          </td>
+        `;
 
         tbody.appendChild(tr);
       });
@@ -166,8 +164,8 @@
       const row = button.closest("tr");
       const cells = row.querySelectorAll("td");
       for (let i = 1; i <= 5; i++) {
-        const currentValue = cells[i].innerText;
-        cells[i].innerHTML = `<input type="text" class="form-control form-control-sm text-center" value="${currentValue}" />`;
+        const value = cells[i].innerText;
+        cells[i].innerHTML = `<input type="text" class="form-control form-control-sm text-center" value="${value}" />`;
       }
       row.querySelector(".btn-primary").classList.add("d-none");
       row.querySelector(".btn-success").classList.remove("d-none");
@@ -177,6 +175,7 @@
       const row = button.closest("tr");
       const index = row.getAttribute("data-index");
       const inputs = row.querySelectorAll("input");
+
       const updatedEmp = {
         name: inputs[0].value,
         email: inputs[1].value,
@@ -188,7 +187,8 @@
       let employees = JSON.parse(localStorage.getItem("employees")) || [];
       employees[index] = updatedEmp;
       localStorage.setItem("employees", JSON.stringify(employees));
-      renderTable();
+
+      renderTable(); // refresh
     }
 
     function deleteEmployee(index) {
@@ -198,9 +198,8 @@
       renderTable();
     }
 
-    renderTable();
+    renderTable(); // initial load
   </script>
-
 </body>
 
 </html>
