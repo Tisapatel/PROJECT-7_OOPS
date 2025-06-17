@@ -80,4 +80,14 @@ Perfect for students and developers practicing OOPS in JavaScript!
 
 ---
 **🔗 Live Preview:** :- https://inheritance-project-five.vercel.app/
+**🔗 screenshot:** :-
+![Screenshot 2025-06-17 123343](https://github.com/user-attachments/assets/ba813353-1fd0-4f22-956c-2672315dd38c)
+![Screenshot 2025-06-17 123510](https://github.com/user-attachments/assets/620b18c3-e72f-479c-9f85-32dc0dca8949)
+![Screenshot 2025-06-17 123539](https://github.com/user-attachments/assets/7a262d85-f429-4a40-8580-96110728ee88)
+![Screenshot 2025-06-17 123645](https://github.com/user-attachments/assets/c4b2ef52-6bce-4f64-914b-ef700c22af21)
+![Screenshot 2025-06-17 123714](https://github.com/user-attachments/assets/aeaaf81a-3679-45a5-8e20-8461ff3622eb)
+![Screenshot 2025-06-17 123747](https://github.com/user-attachments/assets/747db6c7-82bd-4af3-904a-15887eb0a7b8)
+![Screenshot 2025-06-17 123827](https://github.com/user-attachments/assets/8671805e-08cd-40d8-a3a9-7f7bba7b3c5a)
+
+
 **👩‍💻 Author:** Tisa Patel
